@@ -21,4 +21,13 @@ public class MainActivity extends AppCompatActivity {
         //b.setText("make a string");
         startActivity(new Intent(MainActivity.this,ViewProfileActivity.class));
     }
+
+    public void post_button(View v) {
+
+        Button b = (Button)v;
+        //b.setText("make a string");
+        startActivity(new Intent(MainActivity.this,PostActivity.class));
+    }
+
+
 }
