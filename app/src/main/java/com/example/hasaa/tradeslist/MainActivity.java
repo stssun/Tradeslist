@@ -15,18 +15,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void view_profile_button(View v) {
+    public void view_listings_button(View v) {
 
         Button b = (Button)v;
         //b.setText("make a string");
-        startActivity(new Intent(MainActivity.this,ViewProfileActivity.class));
-    }
-
-    public void post_button(View v) {
-
-        Button b = (Button)v;
-        //b.setText("make a string");
-        startActivity(new Intent(MainActivity.this,PostActivity.class));
+        startActivity(new Intent(MainActivity.this,HomeActivity.class));
     }
 
 
