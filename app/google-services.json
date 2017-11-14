@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "53298047887",
+    "firebase_url": "https://tradeslist-11ead.firebaseio.com",
+    "project_id": "tradeslist-11ead",
+    "storage_bucket": "tradeslist-11ead.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:53298047887:android:dff5113104dc3fc7",
+        "android_client_info": {
+          "package_name": "com.example.hasaa.tradeslist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "53298047887-uubhd7j83o5idc7iomldt0re9fnuns1c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hasaa.tradeslist",
+            "certificate_hash": "aefb7071896a28f92616f595e0be077826b238b1"
+          }
+        },
+        {
+          "client_id": "53298047887-da2lf0p2ckl8lin123pukfet6c20qqvi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADLMPt03uQ4zJhyAyf-aTc7sTA4ExaY5k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "53298047887-da2lf0p2ckl8lin123pukfet6c20qqvi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
