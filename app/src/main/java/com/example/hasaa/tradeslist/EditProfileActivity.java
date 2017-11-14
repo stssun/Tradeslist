@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 public class EditProfileActivity extends AppCompatActivity {
 
     private String phoneName;
+    private String name;
     private Button saveProf;
 
     @Override
@@ -29,8 +30,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
 
 
-                EditText name = (EditText) findViewById(R.id.edit_profile_name_text);
-                phoneName = name.getText().toString();
+                EditText nameedit = (EditText) findViewById(R.id.edit_profile_name_text);
+                name = nameedit.getText().toString();
 
                 EditText phone = (EditText) findViewById(R.id.edit_profile_phone_number);
                 phoneName = phone.getText().toString();
@@ -44,7 +45,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 Pattern pattern = Pattern.compile(regex);
                 Matcher matcher = pattern.matcher(phoneName);
                 if(matcher.matches() && name.length() > 0){
-                    Toast.makeText(getApplicationContext(), "Valid Phone Number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
 
                     finish();
                 }
