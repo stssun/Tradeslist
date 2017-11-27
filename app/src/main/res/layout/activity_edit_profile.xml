@@ -52,6 +52,7 @@
         android:layout_marginTop="8dp"
         android:gravity="center_vertical|center_horizontal"
         android:hint="John Smith"
+        android:text="name"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
