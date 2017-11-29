@@ -119,8 +119,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.w("MainActivity", "signInResult:failed code=" + e.getStatusCode());
-
+            //Log.w("MainActivity", "signInResult:failed code=" + e.getStatusCode());
+            int temp = e.getStatusCode();
+            Toast.makeText(this, "its not working " + temp, Toast.LENGTH_SHORT).show();
             //perform some action since sign-in failed
         }
     }
