@@ -23,6 +23,7 @@ public class ViewProfileActivity extends AppCompatActivity {
         //configure sign-in to request user id, email address and basic profile
         //taken from tutorial
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.server_client_id))
                 .requestEmail()
                 .build();
 

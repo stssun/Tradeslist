@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //authentication
     private FirebaseAuth mAuth;
+    //private FirebaseUser user;
 
     //constant for sign in request value
     private static final int RC_SIGN_IN = 1;
@@ -71,33 +72,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //authentication
         mAuth = FirebaseAuth.getInstance();
+        //user = mAuth.getCurrentUser();
     }
 
     @Override
     protected void onStart(){
         super.onStart();
-
+        /*
         //taken from official tutorial
         // Check for existing Google Sign In account, if the user is already signed in
         // the FirebaseUser will be non-null.
-        FirebaseUser user = mAuth.getCurrentUser();
-
         //if non-null, just start the home activity
         if(user != null){
-            if(checkEmail(user.getEmail())){
+            Toast.makeText(MainActivity.this, user.getEmail() + "" + checkEmail(user.getEmail()),
+                    Toast.LENGTH_LONG).show();
+            //if(checkEmail(user.getEmail()))
+            if(false){
                 //go to home activity if email is .edu
                 Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                 startActivity(intent);
             }else{
                 //sign them out
                 //Toast them to change email
-                FirebaseAuth.getInstance().signOut();
-                user.delete();
-                MainActivity.this.recreate();
+                //user.delete();
                 Toast.makeText(MainActivity.this, "Use a .edu email.",
                         Toast.LENGTH_LONG).show();
+                signOut();
             }
-        }
+        }*/
     }
 
     @Override
@@ -180,11 +182,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             }else{
                                 //sign them out
                                 //Toast them to change email
-                                FirebaseAuth.getInstance().signOut();
-                                user.delete();
-                                MainActivity.this.recreate();
                                 Toast.makeText(MainActivity.this, "Use a .edu email.",
                                         Toast.LENGTH_LONG).show();
+                                user.delete();
+                                signOut();
                             }
                         } else {
                             // If sign in fails, display a message to the user.
@@ -201,5 +202,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Matcher matcher = EDU_EMAIL_REGEX.matcher(email);
 
         return matcher.matches();
+    }
+
+    //sign out the user
+    public void signOut(){
+        mGoogleSignInClient.signOut()
+                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(Task<Void> task) {
+                        //user = null;
+                        /*
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);*/
+                        MainActivity.this.recreate();
+                    }
+                });
     }
 }
