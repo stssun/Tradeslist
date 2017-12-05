@@ -31,6 +31,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -40,12 +45,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final Pattern EDU_EMAIL_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.edu$", Pattern.CASE_INSENSITIVE);
 
+    //sign in
     private SignInButton mGoogleButton;
     private GoogleSignInClient mGoogleSignInClient;
 
     //authentication
     private FirebaseAuth mAuth;
     //private FirebaseUser user;
+
+    //database
+    private DatabaseReference mDatabase;
+
 
     //constant for sign in request value
     private static final int RC_SIGN_IN = 1;
@@ -73,6 +83,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //authentication
         mAuth = FirebaseAuth.getInstance();
         //user = mAuth.getCurrentUser();
+
+        //database
+        mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
@@ -176,6 +189,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             //Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             if(checkEmail(user.getEmail())){
+                                //create user profile if it is a new user
+                                createProfileForNew(user.getUid());
                                 //go to home activity if email is .edu
                                 Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                                 startActivity(intent);
@@ -218,5 +233,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         MainActivity.this.recreate();
                     }
                 });
+    }
+
+    //creates a profile for a new user
+    //checks to make sure that if the user is not new it does not override the profile
+    public void createProfileForNew(final String userid){
+        final String name = "Enter your name";
+        final String phone = "Enter your phone number";
+
+        final DatabaseReference profiles = mDatabase.child("profile");
+        profiles.addListenerForSingleValueEvent((new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.child(userid).exists()){
+                    //do nothing if this user's profile already exists
+                }else{
+                    //create the profile
+                    Profile profile = new Profile(name, phone);
+
+                    //save it to the database
+                    profiles.child(userid).setValue(profile);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        }));
     }
 }
