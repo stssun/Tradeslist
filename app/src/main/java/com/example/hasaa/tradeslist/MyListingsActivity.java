@@ -2,6 +2,7 @@ package com.example.hasaa.tradeslist;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -75,5 +76,16 @@ public class MyListingsActivity extends AppCompatActivity {
 
             }
         });
+
+
+    }
+
+    @Override
+    public void onContentChanged() {
+        super.onContentChanged();
+
+        View empty = findViewById(R.id.empty);
+        ListView list = (ListView) findViewById(R.id.my_listings_list_view);
+        list.setEmptyView(empty);
     }
 }
