@@ -79,13 +79,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //taken from official tutorial
         // Check for existing Google Sign In account, if the user is already signed in
-        // the GoogleSignInAccount will be non-null.
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        // the FirebaseUser will be non-null.
+        FirebaseUser user = mAuth.getCurrentUser();
 
         //if non-null, just start the home activity
-        if(account != null){
-            Intent intent = new Intent(this, HomeActivity.class);
-            startActivity(intent);
+        if(user != null){
+            if(checkEmail(user.getEmail())){
+                //go to home activity if email is .edu
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intent);
+            }else{
+                //sign them out
+                //Toast them to change email
+                FirebaseAuth.getInstance().signOut();
+                user.delete();
+                MainActivity.this.recreate();
+                Toast.makeText(MainActivity.this, "Use a .edu email.",
+                        Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -167,12 +178,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                                 startActivity(intent);
                             }else{
+                                //sign them out
                                 //Toast them to change email
-                                //then sign them out
+                                FirebaseAuth.getInstance().signOut();
+                                user.delete();
+                                MainActivity.this.recreate();
                                 Toast.makeText(MainActivity.this, "Use a .edu email.",
                                         Toast.LENGTH_LONG).show();
-                                FirebaseAuth.getInstance().signOut();
-                                MainActivity.this.recreate();
                             }
                         } else {
                             // If sign in fails, display a message to the user.
