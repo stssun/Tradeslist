@@ -22,7 +22,8 @@
         <activity android:name=".EditProfileActivity" />
         <activity android:name=".MyListingsActivity" />
         <activity android:name=".HomeActivity" />
-        <activity android:name=".listview_list"></activity>
+        <activity android:name=".listview_list" />
+        <activity android:name=".ViewOneListingEDIT"></activity>
     </application>
 
 </manifest>
