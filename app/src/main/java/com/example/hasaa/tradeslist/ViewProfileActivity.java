@@ -15,23 +15,42 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
+
 public class ViewProfileActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
 
     private FirebaseAuth mAuth;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_profile);
 
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference().child("profile");
+
+
         mAuth = FirebaseAuth.getInstance();
 
         FirebaseUser user = mAuth.getCurrentUser();
         String username = user.getEmail();
+        String userID = user.getUid();
+
+
 
         TextView tv = (TextView)findViewById(R.id.view_profile_email_text);
         tv.setText(username);
+
+
 
         //configure sign-in to request user id, email address and basic profile
         //taken from tutorial
@@ -42,6 +61,27 @@ public class ViewProfileActivity extends AppCompatActivity {
 
         //build sign in client with the gso
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+
+
+        myRef.child(userID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Profile profileObj = dataSnapshot.getValue(Profile.class);
+                TextView name = (TextView) findViewById(R.id.textView3);
+                name.setText(profileObj.getName());
+
+                name = (TextView) findViewById(R.id.view_profile_phone_number);
+                name.setText(profileObj.getNumber());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     //called when the user pushes the edit profile button

@@ -29,10 +29,6 @@ public class EditProfileActivity extends AppCompatActivity {
     private String name;
     private Button saveProf;
 
-    //Database Refs
-    private FirebaseDatabase mDatabase;
-    private DatabaseReference mProfileRef;
-    private DatabaseReference mNewProfileRef;
 
     private FirebaseAuth mAuth;
 
@@ -50,14 +46,13 @@ public class EditProfileActivity extends AppCompatActivity {
 
         FirebaseUser user = mAuth.getCurrentUser();
         String username = user.getEmail();
+        final String userID = user.getUid();
 
         TextView tv = (TextView)findViewById(R.id.edit_profile_email_text);
         tv.setText(username);
 
         saveProf = (Button) findViewById(R.id.savebutton);
 
-       // mDatabase = FirebaseDatabase.getInstance();
-       // mProfileRef = mDatabase.getReference().child("profile");
 
         saveProf.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,12 +88,19 @@ public class EditProfileActivity extends AppCompatActivity {
                             startActivity(new Intent(EditProfileActivity.this, ViewProfileActivity.class));
 
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
-                            DatabaseReference myRef = database.getReference().child("profile").child("Name");
-                            myRef.setValue(name);
+
+                          /*  myRef.setValue(name);
 
                             myRef = database.getReference().child("profile").child("Phone");
 
-                            myRef.setValue(phoneName);
+                            myRef.setValue(phoneName);*/
+
+
+                            DatabaseReference profiles = database.getReference().child("profile");
+                            Profile profile = new Profile(name, phoneName);
+
+                            //save it to the database
+                            profiles.child(userID).setValue(profile);
 
                             /*mNewProfileRef = mDatabase.getReference().child("profiles");
                             users.put("usertest", "testinput");
