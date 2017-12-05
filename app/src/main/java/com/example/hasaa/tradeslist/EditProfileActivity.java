@@ -85,7 +85,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
                             Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
 
-                            startActivity(new Intent(EditProfileActivity.this, ViewProfileActivity.class));
+                            //startActivity(new Intent(EditProfileActivity.this, ViewProfileActivity.class));
 
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
 

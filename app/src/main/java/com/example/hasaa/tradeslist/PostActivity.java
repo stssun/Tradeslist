@@ -13,9 +13,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PostActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -85,11 +87,14 @@ public class PostActivity extends AppCompatActivity {
         final DatabaseReference listings = mDatabase.child("listing");
         listings.addListenerForSingleValueEvent((new ValueEventListener() {
             ArrayList<Listing> list;
+
+            GenericTypeIndicator<ArrayList<Listing>> t = new GenericTypeIndicator<ArrayList<Listing>>() {};
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.child(userid).exists()){
                     //if user already has listings
-                    list = dataSnapshot.child(userid).getValue(ArrayList.class);
+                    list = dataSnapshot.child(userid).getValue(t);
                 }else{
                     //create new listings ArrayList
                     list = new ArrayList<Listing>();

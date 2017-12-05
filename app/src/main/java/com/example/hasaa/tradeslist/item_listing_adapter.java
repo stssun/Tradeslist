@@ -41,19 +41,13 @@ public class item_listing_adapter extends ArrayAdapter<Listing>{
         String userID = user.getUid();
 
 
-
-
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_listing, parent, false);
-        }
-
         TextView skill = (TextView) convertView.findViewById(R.id.Title);
         TextView use = (TextView) convertView.findViewById(R.id.User);
         TextView description = (TextView) convertView.findViewById(R.id.Desc);
 
         skill.setText(listing.getTitle());
 
-        //use.setText(listing.getLister().getEmail()+".edu");
+        use.setText(username);
 
         description.setText(listing.getDescription());
 

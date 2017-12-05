@@ -6,13 +6,17 @@
 
     <TextView
         android:id="@+id/User"
+        android:layout_alignParentLeft="true"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_below="@+id/Title"
+        android:paddingLeft="10dp"
         android:text="Email" />
 
     <TextView
         android:id="@+id/Title"
+        android:layout_alignParentLeft="true"
+        android:paddingLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:text="Title"
@@ -21,8 +25,10 @@
 
     <TextView
         android:id="@+id/Desc"
+        android:layout_alignParentLeft="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
         android:text="Description"
         android:layout_below="@+id/User"/>
 
