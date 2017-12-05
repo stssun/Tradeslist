@@ -21,7 +21,8 @@
         <activity android:name=".ViewPostsActivity" />
         <activity android:name=".EditProfileActivity" />
         <activity android:name=".MyListingsActivity" />
-        <activity android:name=".HomeActivity"></activity>
+        <activity android:name=".HomeActivity" />
+        <activity android:name=".listview_list"></activity>
     </application>
 
 </manifest>
