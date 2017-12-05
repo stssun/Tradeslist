@@ -8,10 +8,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class PostActivity extends AppCompatActivity {
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
 
 
     private Button saveProf;
@@ -20,6 +28,11 @@ public class PostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+
+        //initialize firebase reference and auth reference
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
 
         saveProf = (Button) findViewById(R.id.postbutton);
 
@@ -40,6 +53,11 @@ public class PostActivity extends AppCompatActivity {
                 String request = requestedit.getText().toString();
 
                 if(title.length() > 0 && description.length() > 0 && request.length() > 0){
+                    Listing post = new Listing(title, description, request);
+
+                    addListing(post, mAuth.getCurrentUser().getUid());
+
+
                     Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
                     finish();
 
@@ -59,6 +77,35 @@ public class PostActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    public void addListing(final Listing post, final String userid){
+
+        final DatabaseReference listings = mDatabase.child("listing");
+        listings.addListenerForSingleValueEvent((new ValueEventListener() {
+            ArrayList<Listing> list;
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.child(userid).exists()){
+                    //if user already has listings
+                    list = dataSnapshot.child(userid).getValue(ArrayList.class);
+                }else{
+                    //create new listings ArrayList
+                    list = new ArrayList<Listing>();
+                }
+                //add the listing
+                list.add(post);
+
+                //save to database
+                listings.child(userid).setValue(list);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        }));
 
     }
 }
