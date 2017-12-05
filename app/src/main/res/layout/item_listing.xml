@@ -39,4 +39,13 @@
         android:layout_alignParentRight="true"
         android:text="View"
         />
+
+    <Button
+        android:id="@+id/deletelisting"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        android:layout_toLeftOf="@id/itemlistingviewbutton"
+        android:text="Delete"
+        />
+
 </RelativeLayout>

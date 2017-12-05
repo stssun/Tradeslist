@@ -78,11 +78,7 @@ public class item_listing_adapter extends ArrayAdapter<Listing>{
                         list = dataSnapshot.child("listing").child(userID).getValue(t);
                         Log.i("from listing adapter", list.get(position).getTitle());
 
-         //               ArrayList<Listing> arrayOfListings = new ArrayList<Listing>();
-//                        Listing temp = arrayOfListings.get(position);
-
                         Profile profileObj = dataSnapshot.child("profile").child(userID).getValue(Profile.class);
-
 
                         int temp = list.size();
                         temp = temp - position - 1;
@@ -102,36 +98,6 @@ public class item_listing_adapter extends ArrayAdapter<Listing>{
                     public void onCancelled(DatabaseError databaseError) {
                     }
                 }));
-
-
-                //Log.i("from listing adapter", list.get(position).getTitle());
-
-//                ArrayList<Listing> arrayOfListings = new ArrayList<Listing>();
-                //arrayOfListings = dataSnapshot.child(userid).getValue(t);
-                //mListingRef.addChildEventListener(postListener);
-
-//                arrayOfListings = list;
-
-
-
-//                Intent intent = new Intent(ctx, ViewOneListingEDIT.class);
-//                intent.putExtra("ID", userID);
-//                intent.putExtra("title", list.get(position).getTitle());
-//                intent.putExtra("description", list.get(position).getDescription());
-//                intent.putExtra("request", list.get(position).getRequest());
-//                ctx.startActivity(intent);
-
-
-                //Toast.makeText(ctx, arrayOfListings.get(position).getTitle(), Toast.LENGTH_SHORT).show();
-                //Listing temp = arrayOfListings.get(position);
-                //item_listing_adapter adapter = new item_listing_adapter(ctx, arrayOfListings);
-
-
-
-
-
-                //Toast.makeText(ctx, "Your answer is correct!" , Toast.LENGTH_SHORT ).show();
-
 
             }
         });
