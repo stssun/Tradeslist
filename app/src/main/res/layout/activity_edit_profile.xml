@@ -24,7 +24,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_profile_name_text" />
 
-    <EditText
+    <TextView
         android:id="@+id/edit_profile_email_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
