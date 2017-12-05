@@ -68,20 +68,20 @@ public class item_listing_adapter extends ArrayAdapter<Listing>{
                 final String userID = user.getUid();
 
                 mDatabase = FirebaseDatabase.getInstance();
-                mListingRef = mDatabase.getReference().child("listing");
+                mListingRef = mDatabase.getReference();
 
                 mListingRef.addListenerForSingleValueEvent((new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
                         GenericTypeIndicator<ArrayList<Listing>> t = new GenericTypeIndicator<ArrayList<Listing>>() {};
-                        list = dataSnapshot.child(userID).getValue(t);
+                        list = dataSnapshot.child("listing").child(userID).getValue(t);
                         Log.i("from listing adapter", list.get(position).getTitle());
 
          //               ArrayList<Listing> arrayOfListings = new ArrayList<Listing>();
 //                        Listing temp = arrayOfListings.get(position);
 
-                        Profile profileObj = dataSnapshot.getValue(Profile.class);
+                        Profile profileObj = dataSnapshot.child("profile").child(userID).getValue(Profile.class);
 
 
                         int temp = list.size();
