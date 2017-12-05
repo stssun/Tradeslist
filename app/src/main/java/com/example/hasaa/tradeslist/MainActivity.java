@@ -4,6 +4,7 @@ package com.example.hasaa.tradeslist;
  * Most of the authentication code is adapted or taken from the official firebase android studio
  * user authentication tutorial on github:
  * https://developers.google.com/identity/sign-in/android/sign-in
+ * https://firebase.google.com/docs/auth/android/google-signin
  */
 
 import android.content.Intent;
@@ -25,13 +26,18 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private SignInButton mGoogleButton;
     private GoogleSignInClient mGoogleSignInClient;
+
+    //authentication
+    private FirebaseAuth mAuth;
 
     //constant for sign in request value
     private static final int RC_SIGN_IN = 1;
@@ -54,6 +60,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //build sign in client with the gso
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        //authentication
+        mAuth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -102,7 +111,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // The Task returned from this call is always completed, no need to attach
             // a listener.
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            handleSignInResult(task);
+            //handleSignInResult(task);
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuthWithGoogle(account);
+            } catch (ApiException e) {
+                // Google Sign In failed, update UI appropriately
+            }
         }
     }
 
@@ -124,5 +140,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this, "its not working " + temp, Toast.LENGTH_SHORT).show();
             //perform some action since sign-in failed
         }
+    }
+
+    //taken from tutorial code
+    //authenticate user with firebase
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            //Log.d(TAG, "signInWithCredential:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            //updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            //Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            Toast.makeText(MainActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            //ferform some action since sign-in failed
+                        }
+                    }
+                });
     }
 }

@@ -11,6 +11,8 @@ public class Profile {
     public Profile(){
         full_name = "";
         phone_number = "";
+
+        //required for calls to DataSnapshot.get
     }
 
     public Profile(String name, String phone){
@@ -25,5 +27,9 @@ public class Profile {
     public void setNumber(String number){
         phone_number = number;
     }
+
+    public String getName(){return full_name; }
+
+    public String getNumber(){return phone_number; }
 
 }
