@@ -7,14 +7,31 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 
 public class EditProfileActivity extends AppCompatActivity {
 
     private String phoneName;
     private String name;
     private Button saveProf;
+
+    //Database Refs
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mProfileRef;
+    private DatabaseReference mNewProfileRef;
+
+    public final Map<String, String> users = new HashMap<String, String>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +44,10 @@ public class EditProfileActivity extends AppCompatActivity {
         saveProf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+/*
+                mNewProfileRef = mDatabase.getReference().child("profiles/");
+                users.put(emailName, newUser);
+                mNewProfileRef.setValue(users);*/
 
                 EditText nameedit = (EditText) findViewById(R.id.edit_profile_name_text);
                 name = nameedit.getText().toString();
