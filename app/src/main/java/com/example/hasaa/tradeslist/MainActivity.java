@@ -194,6 +194,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 //go to home activity if email is .edu
                                 Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                                 startActivity(intent);
+                                finish();
                             }else{
                                 //sign them out
                                 //Toast them to change email
