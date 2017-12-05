@@ -32,7 +32,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    //email regex for .edu emails
+    public static final Pattern EDU_EMAIL_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.edu$", Pattern.CASE_INSENSITIVE);
+
     private SignInButton mGoogleButton;
     private GoogleSignInClient mGoogleSignInClient;
 
@@ -122,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
-
+/*
     //taken from tutorial
     //handles the sign in result
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
@@ -141,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this, "its not working " + temp, Toast.LENGTH_SHORT).show();
             //perform some action since sign-in failed
         }
-    }
+    }*/
 
     //taken from tutorial code
     //authenticate user with firebase
@@ -155,9 +162,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             // Sign in success, update UI with the signed-in user's information
                             //Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            //updateUI(user);
-                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                            startActivity(intent);
+                            if(checkEmail(user.getEmail())){
+                                //go to home activity if email is .edu
+                                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                startActivity(intent);
+                            }else{
+                                //Toast them to change email
+                                //then sign them out
+                                Toast.makeText(MainActivity.this, "Use a .edu email.",
+                                        Toast.LENGTH_LONG).show();
+                                FirebaseAuth.getInstance().signOut();
+                                MainActivity.this.recreate();
+                            }
                         } else {
                             // If sign in fails, display a message to the user.
                             //Log.w(TAG, "signInWithCredential:failure", task.getException());
@@ -167,5 +183,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
                     }
                 });
+    }
+
+    private boolean checkEmail(String email){
+        Matcher matcher = EDU_EMAIL_REGEX.matcher(email);
+
+        return matcher.matches();
     }
 }
