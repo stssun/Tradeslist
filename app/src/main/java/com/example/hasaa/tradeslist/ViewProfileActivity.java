@@ -50,6 +50,7 @@ public class ViewProfileActivity extends AppCompatActivity {
                     public void onComplete(Task<Void> task) {
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
+                        finish();
                     }
                 });
     }
