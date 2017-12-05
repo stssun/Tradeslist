@@ -49,8 +49,8 @@ public class ViewProfileActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(Task<Void> task) {
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
-                        finish();
                     }
                 });
     }
