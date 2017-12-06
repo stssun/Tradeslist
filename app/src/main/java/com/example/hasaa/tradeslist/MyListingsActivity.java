@@ -1,5 +1,6 @@
 package com.example.hasaa.tradeslist;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -54,11 +55,13 @@ public class MyListingsActivity extends AppCompatActivity {
                 Listing post= dataSnapshot.getValue(Listing.class);
                 //ProfileEntry lister= post.getLister();
                 adapter.insert(post, 0);
+
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 adapter.notifyDataSetChanged();
+                //startActivity(getIntent());
             }
 
             @Override
