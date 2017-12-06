@@ -54,6 +54,46 @@ public class item_listing_adapter extends ArrayAdapter<Listing>{
 
         Button viewitem = (Button)convertView.findViewById(R.id.itemlistingviewbutton);
         //Button addBtn = (Button)convertView.findViewById(R.id.add_btn);
+        //delete button
+        Button deleteitem = (Button)convertView.findViewById(R.id.deletelisting);
+
+        deleteitem.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Context ctx = getContext();
+
+                mAuth = FirebaseAuth.getInstance();
+
+                FirebaseUser user = mAuth.getCurrentUser();
+                final String userId = user.getUid();
+
+                mDatabase = FirebaseDatabase.getInstance();
+                mListingRef = mDatabase.getReference();
+
+                mListingRef.addListenerForSingleValueEvent((new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        GenericTypeIndicator<ArrayList<Listing>> t = new GenericTypeIndicator<ArrayList<Listing>>(){};
+                        list = dataSnapshot.child("listing").child(userId).getValue(t);
+
+                        //get proper index
+                        int temp = list.size();
+                        temp = temp - position - 1;
+
+                        //remove from list
+                        list.remove(temp);
+
+                        //save back to database
+                        mListingRef.child("listing").child(userId).setValue(list);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                }));
+            }
+        });
 
         viewitem.setOnClickListener(new View.OnClickListener() {
             @Override
