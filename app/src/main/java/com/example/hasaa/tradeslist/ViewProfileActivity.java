@@ -108,4 +108,10 @@ public class ViewProfileActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        startActivity(new Intent(ViewProfileActivity.this,HomeActivity.class));
+    }
 }

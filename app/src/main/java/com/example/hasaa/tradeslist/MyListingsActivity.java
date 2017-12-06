@@ -61,7 +61,8 @@ public class MyListingsActivity extends AppCompatActivity {
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 adapter.notifyDataSetChanged();
-                //startActivity(getIntent());
+                //finish();
+                startActivity(getIntent());
             }
 
             @Override
@@ -90,5 +91,11 @@ public class MyListingsActivity extends AppCompatActivity {
         View empty = findViewById(R.id.empty);
         ListView list = (ListView) findViewById(R.id.my_listings_list_view);
         list.setEmptyView(empty);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        startActivity(new Intent(MyListingsActivity.this,ViewProfileActivity.class));
     }
 }

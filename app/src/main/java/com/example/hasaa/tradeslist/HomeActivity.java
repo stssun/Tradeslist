@@ -35,4 +35,9 @@ public class HomeActivity extends AppCompatActivity {
         //b.setText("make a string");
         startActivity(new Intent(HomeActivity.this,ViewPostsActivity.class));
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }
