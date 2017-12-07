@@ -8,18 +8,24 @@ public class Listing {
     private String title;
     private String description;
     private String request;
+    private String phone;
+    private String email;
 
     public Listing(){
         //need default
         title = "";
         description = "";
         request = "";
+        phone = "";
+        email = "";
     }
 
-    public Listing(String _title, String _description, String _request){
+    public Listing(String _title, String _description, String _request, String _phone, String _email){
         title = _title;
         description = _description;
         request = _request;
+        phone = _phone;
+        email = _email;
     }
 
     public void setTitle(String _title){
@@ -34,6 +40,10 @@ public class Listing {
         request = _request;
     }
 
+    public void setPhone(String _phone) { phone = _phone; }
+
+    public void setEmail(String _email) { email = _email; }
+
     public String getTitle(){
         return title;
     }
@@ -45,4 +55,8 @@ public class Listing {
     public String getRequest(){
         return request;
     }
+
+    public String getPhone(){ return phone; }
+
+    public String getEmail() { return email; }
 }

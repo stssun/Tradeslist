@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,6 +36,10 @@ public class PostActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
+        FirebaseUser user = mAuth.getCurrentUser();
+        final String email = user.getEmail();
+        String userID = user.getUid();
+
 
         saveProf = (Button) findViewById(R.id.postbutton);
 
@@ -54,8 +59,9 @@ public class PostActivity extends AppCompatActivity {
                 EditText requestedit= (EditText) findViewById(R.id.requesttext);
                 String request = requestedit.getText().toString();
 
+
                 if(title.length() > 0 && description.length() > 0 && request.length() > 0){
-                    Listing post = new Listing(title, description, request);
+                    Listing post = new Listing(title, description, request, "1231231234",email);
 
                     addListing(post, mAuth.getCurrentUser().getUid());
 

@@ -82,8 +82,8 @@ public class item_listing_no_edit extends ArrayAdapter<Listing> {
 
                         Context ctx = getContext();
                         Intent intent = new Intent(ctx, ViewOneListingEDIT.class);
-                        intent.putExtra("phone", profileObj.getNumber());
-                        intent.putExtra("ID", username);
+                        intent.putExtra("phone", list.get(temp).getPhone());
+                        intent.putExtra("ID", list.get(temp).getEmail());
                         intent.putExtra("title", list.get(temp).getTitle());
                         intent.putExtra("description", list.get(temp).getDescription());
                         intent.putExtra("request", list.get(temp).getRequest());
@@ -112,10 +112,9 @@ public class item_listing_no_edit extends ArrayAdapter<Listing> {
 
         skill.setText(listing.getTitle());
 
-        use.setText(username);
+        use.setText(listing.getEmail());
 
         description.setText(listing.getDescription());
-
 
         return convertView;
     }

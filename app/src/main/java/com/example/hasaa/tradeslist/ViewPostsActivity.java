@@ -38,7 +38,9 @@ public class ViewPostsActivity extends AppCompatActivity {
 
         //Database References
         mDatabase = FirebaseDatabase.getInstance();
-        mListingRef = mDatabase.getReference().child("listing").child(userID);
+
+        //mListingRef = mDatabase.getReference().child("listing").child(userID);
+        mListingRef = mDatabase.getReference().child("listing");
 
         ArrayList<Listing> arrayOfListings = new ArrayList<Listing>();
         final item_listing_no_edit adapter = new item_listing_no_edit(this, arrayOfListings);
@@ -49,9 +51,16 @@ public class ViewPostsActivity extends AppCompatActivity {
         mListingRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Listing post= dataSnapshot.getValue(Listing.class);
-                //ProfileEntry lister= post.getLister();
-                adapter.insert(post, 0);
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Listing post = snapshot.getValue(Listing.class);
+                    adapter.insert(post, 0);
+                }
+
+
+//                Listing post= dataSnapshot.getValue(Listing.class);
+//                //ProfileEntry lister= post.getLister();
+//                adapter.insert(post, 0);
             }
 
             @Override
